@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diccionario de Pronunciación</title>
+    <style>
+        /* Estilos para que se vea moderno y limpio */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .instrucciones {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🗣️ Pronunciador</h1>
+        <input type="text" id="palabra" placeholder="Escribe una palabra o frase..." autocomplete="off">
+        <button onclick="reproducirSonido()">Escuchar Pronunciación</button>
+        <p class="instrucciones">Escribe algo en español y presiona el botón.</p>
+    </div>
+
+    <script>
+        function reproducirSonido() {
+            const texto = document.getElementById('palabra').value;
+            
+            if (texto.trim() === "") {
+                alert("Por favor, escribe algo.");
+                return;
+            }
+
+            // Crear el objeto de lectura
+            const lectura = new SpeechSynthesisUtterance();
+            lectura.text = texto;
+            lectura.lang = 'es-ES'; // Configurado para español
+            lectura.rate = 0.9;     // Velocidad ligeramente más lenta para mayor claridad
+            lectura.pitch = 1;      // Tono de voz normal
+
+            // Ejecutar la reproducción
+            window.speechSynthesis.speak(lectura);
+        }
+
+        // Permitir que funcione al presionar la tecla "Enter"
+        document.getElementById('palabra').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                reproducirSonido();
+            }
+        });
+    </script>
+
+</body>
+</html>
