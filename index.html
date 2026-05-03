@@ -3,109 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diccionario de Pronunciación</title>
+    <title>Mi App de Pronunciación</title>
     <style>
-        /* Estilos para que se vea moderno y limpio */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #eef2f7;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            padding: 20px;
             margin: 0;
         }
-
         .container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
             text-align: center;
-            width: 90%;
-            max-width: 400px;
         }
+        h1 { color: #2c3e50; margin-bottom: 5px; }
+        .subtitle { color: #7f8c8d; margin-bottom: 25px; font-size: 0.9rem; }
+        
+        /* Buscador manual */
+        .search-box { margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        input { padding: 10px; width: 70%; border: 1px solid #ddd; border-radius: 8px; }
+        .btn-main { background: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; }
 
-        h1 {
-            color: #333;
-            margin-bottom: 1.5rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 1rem;
-            border: 2px solid #ddd;
+        /* Grupos de temas */
+        .tema-section { text-align: left; margin-top: 20px; }
+        .tema-titulo { background: #2c3e50; color: white; padding: 8px 15px; border-radius: 10px; font-size: 1rem; margin-bottom: 10px; }
+        .grid-palabras { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        
+        .btn-palabra {
+            background: #fff;
+            border: 2px solid #3498db;
+            color: #3498db;
+            padding: 8px;
             border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus {
-            border-color: #007bff;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 16px;
             cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
+            font-weight: bold;
+            transition: all 0.2s;
         }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .instrucciones {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 1rem;
-        }
+        .btn-palabra:hover { background: #3498db; color: white; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>🗣️ Pronunciador</h1>
-        <input type="text" id="palabra" placeholder="Escribe una palabra o frase..." autocomplete="off">
-        <button onclick="reproducirSonido()">Escuchar Pronunciación</button>
-        <p class="instrucciones">Escribe algo en español y presiona el botón.</p>
+<div class="container">
+    <h1>🗣️ Pro-Speaker</h1>
+    <p class="subtitle">Aprende la pronunciación por temas</p>
+
+    <!-- Buscador libre -->
+    <div class="search-box">
+        <input type="text" id="palabraLibre" placeholder="Escribe cualquier palabra...">
+        <button class="btn-main" onclick="hablar(document.getElementById('palabraLibre').value)">🔊</button>
     </div>
 
-    <script>
-        function reproducirSonido() {
-            const texto = document.getElementById('palabra').value;
-            
-            if (texto.trim() === "") {
-                alert("Por favor, escribe algo.");
-                return;
-            }
+    <!-- TEMA 1 -->
+    <div class="tema-section">
+        <div class="tema-titulo">Tema 1: Saludos</div>
+        <div class="grid-palabras">
+            <button class="btn-palabra" onclick="hablar('Hola')">Hola</button>
+            <button class="btn-palabra" onclick="hablar('Buenos días')">Buenos días</button>
+            <button class="btn-palabra" onclick="hablar('¿Cómo estás?')">¿Cómo estás?</button>
+            <button class="btn-palabra" onclick="hablar('Adiós')">Adiós</button>
+        </div>
+    </div>
 
-            // Crear el objeto de lectura
-            const lectura = new SpeechSynthesisUtterance();
-            lectura.text = texto;
-            lectura.lang = 'es-ES'; // Configurado para español
-            lectura.rate = 0.9;     // Velocidad ligeramente más lenta para mayor claridad
-            lectura.pitch = 1;      // Tono de voz normal
+    <!-- TEMA 2 -->
+    <div class="tema-section">
+        <div class="tema-titulo">Tema 2: Comida</div>
+        <div class="grid-palabras">
+            <button class="btn-palabra" onclick="hablar('Manzana')">Manzana</button>
+            <button class="btn-palabra" onclick="hablar('Pan')">Pan</button>
+            <button class="btn-palabra" onclick="hablar('Agua')">Agua</button>
+            <button class="btn-palabra" onclick="hablar('Desayuno')">Desayuno</button>
+        </div>
+    </div>
 
-            // Ejecutar la reproducción
-            window.speechSynthesis.speak(lectura);
-        }
+    <!-- TEMA 3 -->
+    <div class="tema-section">
+        <div class="tema-titulo">Tema 3: Viajes</div>
+        <div class="grid-palabras">
+            <button class="btn-palabra" onclick="hablar('Aeropuerto')">Aeropuerto</button>
+            <button class="btn-palabra" onclick="hablar('Pasaporte')">Pasaporte</button>
+            <button class="btn-palabra" onclick="hablar('Maleta')">Maleta</button>
+            <button class="btn-palabra" onclick="hablar('Hotel')">Hotel</button>
+        </div>
+    </div>
 
-        // Permitir que funcione al presionar la tecla "Enter"
-        document.getElementById('palabra').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                reproducirSonido();
-            }
-        });
-    </script>
+</div>
+
+<script>
+    function hablar(texto) {
+        if (!texto) return;
+        const mensaje = new SpeechSynthesisUtterance();
+        mensaje.text = texto;
+        mensaje.lang = 'es-ES';
+        mensaje.rate = 0.9;
+        window.speechSynthesis.speak(mensaje);
+    }
+</script>
 
 </body>
 </html>
