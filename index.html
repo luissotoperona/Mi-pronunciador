@@ -3,105 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi App de Pronunciación</title>
+    <title>Pro-Speaker + PDF</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #eef2f7;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            margin: 0;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-        }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 20px; margin: 0; }
+        .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 500px; text-align: center; }
         h1 { color: #2c3e50; margin-bottom: 5px; }
-        .subtitle { color: #7f8c8d; margin-bottom: 25px; font-size: 0.9rem; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 20px; background: #e8f4fd; color: #3498db; font-weight: bold; }
         
-        /* Buscador manual */
-        .search-box { margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
-        input { padding: 10px; width: 70%; border: 1px solid #ddd; border-radius: 8px; }
-        .btn-main { background: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; }
+        /* Sección de Descargas */
+        .download-section { background: #fdf2f2; padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px dashed #e74c3c; }
+        .download-title { color: #e74c3c; font-weight: bold; margin-bottom: 10px; display: block; }
+        .pdf-grid { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .btn-pdf { background: #e74c3c; color: white; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; transition: 0.3s; }
+        .btn-pdf:hover { background: #c0392b; }
 
-        /* Grupos de temas */
         .tema-section { text-align: left; margin-top: 20px; }
-        .tema-titulo { background: #2c3e50; color: white; padding: 8px 15px; border-radius: 10px; font-size: 1rem; margin-bottom: 10px; }
-        .grid-palabras { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .tema-titulo { background: #34495e; color: white; padding: 10px 15px; border-radius: 10px; font-size: 1rem; margin-bottom: 12px; }
+        .grid-palabras { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; margin-bottom: 25px; }
         
         .btn-palabra {
-            background: #fff;
-            border: 2px solid #3498db;
-            color: #3498db;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
+            background: #fff; border: 2px solid #3498db; color: #3498db;
+            padding: 10px; border-radius: 10px; cursor: pointer; font-weight: 600;
+            transition: all 0.2s; outline: none;
         }
-        .btn-palabra:hover { background: #3498db; color: white; }
+        .btn-palabra:active { transform: scale(0.95); background: #3498db; color: white; }
+        
+        .info-tip { font-size: 0.8rem; color: #95a5a6; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>🗣️ Pro-Speaker</h1>
-    <p class="subtitle">Aprende la pronunciación por temas</p>
+    <div id="indicador" class="status-badge">Modo: Normal</div>
 
-    <!-- Buscador libre -->
-    <div class="search-box">
-        <input type="text" id="palabraLibre" placeholder="Escribe cualquier palabra...">
-        <button class="btn-main" onclick="hablar(document.getElementById('palabraLibre').value)">🔊</button>
+    <!-- SECCIÓN DE DESCARGAS PDF -->
+    <div class="download-section">
+        <span class="download-title">📄 Descargar Vocabulario PDF</span>
+        <div class="pdf-grid">
+            <!-- Asegúrate de que el nombre coincida exactamente con tu archivo en GitHub -->
+            <a href="tema1-saludos.pdf" download class="btn-pdf">📥 Tema 1</a>
+            <a href="tema2-comida.pdf" download class="btn-pdf">📥 Tema 2</a>
+            <a href="tema3-viajes.pdf" download class="btn-pdf">📥 Tema 3</a>
+        </div>
     </div>
 
     <!-- TEMA 1 -->
     <div class="tema-section">
-        <div class="tema-titulo">Tema 1: Saludos</div>
+        <div class="tema-titulo">Tema 1: Esenciales</div>
         <div class="grid-palabras">
-            <button class="btn-palabra" onclick="hablar('Hola')">Hola</button>
-            <button class="btn-palabra" onclick="hablar('Buenos días')">Buenos días</button>
-            <button class="btn-palabra" onclick="hablar('¿Cómo estás?')">¿Cómo estás?</button>
-            <button class="btn-palabra" onclick="hablar('Adiós')">Adiós</button>
+            <button class="btn-palabra" onclick="hablarInteligente('Biblioteca')">Biblioteca</button>
+            <button class="btn-palabra" onclick="hablarInteligente('Ferrocarril')">Ferrocarril</button>
+            <button class="btn-palabra" onclick="hablarInteligente('Gracias')">Gracias</button>
+            <button class="btn-palabra" onclick="hablarInteligente('Escritorio')">Escritorio</button>
         </div>
     </div>
 
     <!-- TEMA 2 -->
     <div class="tema-section">
-        <div class="tema-titulo">Tema 2: Comida</div>
+        <div class="tema-titulo">Tema 2: Verbos</div>
         <div class="grid-palabras">
-            <button class="btn-palabra" onclick="hablar('Manzana')">Manzana</button>
-            <button class="btn-palabra" onclick="hablar('Pan')">Pan</button>
-            <button class="btn-palabra" onclick="hablar('Agua')">Agua</button>
-            <button class="btn-palabra" onclick="hablar('Desayuno')">Desayuno</button>
+            <button class="btn-palabra" onclick="hablarInteligente('Caminar')">Caminar</button>
+            <button class="btn-palabra" onclick="hablarInteligente('Escribir')">Escribir</button>
+            <button class="btn-palabra" onclick="hablarInteligente('Escuchar')">Escuchar</button>
+            <button class="btn-palabra" onclick="hablarInteligente('Entender')">Entender</button>
         </div>
     </div>
 
-    <!-- TEMA 3 -->
-    <div class="tema-section">
-        <div class="tema-titulo">Tema 3: Viajes</div>
-        <div class="grid-palabras">
-            <button class="btn-palabra" onclick="hablar('Aeropuerto')">Aeropuerto</button>
-            <button class="btn-palabra" onclick="hablar('Pasaporte')">Pasaporte</button>
-            <button class="btn-palabra" onclick="hablar('Maleta')">Maleta</button>
-            <button class="btn-palabra" onclick="hablar('Hotel')">Hotel</button>
-        </div>
-    </div>
-
+    <p class="info-tip">💡 1 clic: Normal | 2 clics seguidos: Tortuga 🐢</p>
 </div>
 
 <script>
-    function hablar(texto) {
-        if (!texto) return;
+    let ultimaPalabra = "";
+    
+    function hablarInteligente(texto) {
+        window.speechSynthesis.cancel();
         const mensaje = new SpeechSynthesisUtterance();
         mensaje.text = texto;
         mensaje.lang = 'es-ES';
-        mensaje.rate = 0.9;
+        const indicador = document.getElementById('indicador');
+
+        if (ultimaPalabra === texto) {
+            mensaje.rate = 0.5;
+            indicador.innerText = "Modo: Lento 🐢";
+            indicador.style.color = "#e67e22";
+            indicador.style.background = "#fdf2e9";
+            ultimaPalabra = ""; 
+        } else {
+            mensaje.rate = 0.9;
+            indicador.innerText = "Modo: Normal";
+            indicador.style.color = "#3498db";
+            indicador.style.background = "#e8f4fd";
+            ultimaPalabra = texto;
+        }
         window.speechSynthesis.speak(mensaje);
     }
 </script>
