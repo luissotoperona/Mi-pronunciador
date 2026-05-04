@@ -8,14 +8,12 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 20px; margin: 0; }
         .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 500px; text-align: center; }
         h1 { color: #2c3e50; margin-bottom: 5px; }
-        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 20px; background: #e8f4fd; color: #3498db; font-weight: bold; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 20px; background: #e8f4fd; color: #3498db; font-weight: bold; transition: all 0.3s; }
         
-        /* Sección de Descargas */
         .download-section { background: #fdf2f2; padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px dashed #e74c3c; }
         .download-title { color: #e74c3c; font-weight: bold; margin-bottom: 10px; display: block; }
         .pdf-grid { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .btn-pdf { background: #e74c3c; color: white; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; transition: 0.3s; }
-        .btn-pdf:hover { background: #c0392b; }
+        .btn-pdf { background: #e74c3c; color: white; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; }
 
         .tema-section { text-align: left; margin-top: 20px; }
         .tema-titulo { background: #34495e; color: white; padding: 10px 15px; border-radius: 10px; font-size: 1rem; margin-bottom: 12px; }
@@ -27,7 +25,6 @@
             transition: all 0.2s; outline: none;
         }
         .btn-palabra:active { transform: scale(0.95); background: #3498db; color: white; }
-        
         .info-tip { font-size: 0.8rem; color: #95a5a6; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
     </style>
 </head>
@@ -37,18 +34,14 @@
     <h1>🗣️ Pro-Speaker</h1>
     <div id="indicador" class="status-badge">Modo: Normal</div>
 
-    <!-- SECCIÓN DE DESCARGAS PDF -->
     <div class="download-section">
         <span class="download-title">📄 Descargar Vocabulario PDF</span>
         <div class="pdf-grid">
-            <!-- Asegúrate de que el nombre coincida exactamente con tu archivo en GitHub -->
             <a href="tema1-saludos.pdf" download class="btn-pdf">📥 Tema 1</a>
             <a href="tema2-comida.pdf" download class="btn-pdf">📥 Tema 2</a>
-            <a href="tema3-viajes.pdf" download class="btn-pdf">📥 Tema 3</a>
         </div>
     </div>
 
-    <!-- TEMA 1 -->
     <div class="tema-section">
         <div class="tema-titulo">Tema 1: Esenciales</div>
         <div class="grid-palabras">
@@ -59,17 +52,6 @@
         </div>
     </div>
 
-    <!-- TEMA 2 -->
-    <div class="tema-section">
-        <div class="tema-titulo">Tema 2: Verbos</div>
-        <div class="grid-palabras">
-            <button class="btn-palabra" onclick="hablarInteligente('Caminar')">Caminar</button>
-            <button class="btn-palabra" onclick="hablarInteligente('Escribir')">Escribir</button>
-            <button class="btn-palabra" onclick="hablarInteligente('Escuchar')">Escuchar</button>
-            <button class="btn-palabra" onclick="hablarInteligente('Entender')">Entender</button>
-        </div>
-    </div>
-
     <p class="info-tip">💡 1 clic: Normal | 2 clics seguidos: Tortuga 🐢</p>
 </div>
 
@@ -77,26 +59,33 @@
     let ultimaPalabra = "";
     
     function hablarInteligente(texto) {
+        // Cancelamos cualquier sonido anterior inmediatamente
         window.speechSynthesis.cancel();
-        const mensaje = new SpeechSynthesisUtterance();
-        mensaje.text = texto;
-        mensaje.lang = 'es-ES';
-        const indicador = document.getElementById('indicador');
 
-        if (ultimaPalabra === texto) {
-            mensaje.rate = 0.5;
-            indicador.innerText = "Modo: Lento 🐢";
-            indicador.style.color = "#e67e22";
-            indicador.style.background = "#fdf2e9";
-            ultimaPalabra = ""; 
-        } else {
-            mensaje.rate = 0.9;
-            indicador.innerText = "Modo: Normal";
-            indicador.style.color = "#3498db";
-            indicador.style.background = "#e8f4fd";
-            ultimaPalabra = texto;
-        }
-        window.speechSynthesis.speak(mensaje);
+        // Esperamos un suspiro (50ms) para que el navegador resetee la voz
+        setTimeout(() => {
+            const mensaje = new SpeechSynthesisUtterance();
+            mensaje.text = texto;
+            mensaje.lang = 'es-ES';
+            const indicador = document.getElementById('indicador');
+
+            // Comparación limpia para detectar el segundo clic
+            if (ultimaPalabra.toLowerCase() === texto.toLowerCase()) {
+                mensaje.rate = 0.3; // Súper lento
+                indicador.innerText = "Modo: Muy Lento 🐢";
+                indicador.style.background = "#fdf2e9";
+                indicador.style.color = "#e67e22";
+                ultimaPalabra = ""; // Reset para que el siguiente clic sea normal
+            } else {
+                mensaje.rate = 1.0; // Normal
+                indicador.innerText = "Modo: Normal";
+                indicador.style.background = "#e8f4fd";
+                indicador.style.color = "#3498db";
+                ultimaPalabra = texto;
+            }
+
+            window.speechSynthesis.speak(mensaje);
+        }, 50);
     }
 </script>
 
