@@ -3,89 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pronunciador Pro - Skool Edition</title>
+    <title>Pro-Speaker - Unidad 1</title>
     <style>
-        /* Estilo minimalista tipo Skool */
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #ffffff; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .app-card { width: 100%; max-width: 450px; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .app-card { width: 100%; max-width: 500px; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         
-        .header { text-align: center; margin-bottom: 20px; }
-        .status-pill { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600; background: #f0f2f5; color: #5c6c7b; margin-bottom: 10px; }
+        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #f0f2f5; padding-bottom: 15px; }
+        h1 { color: #1a73e8; font-size: 22px; margin: 0; }
+        .status-pill { display: inline-block; padding: 5px 15px; border-radius: 50px; font-size: 12px; font-weight: 600; background: #f0f2f5; color: #5c6c7b; margin-top: 10px; transition: 0.3s; }
 
-        /* Pestañas compactas */
-        .tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; overflow-x: auto; }
-        .tab { background: none; border: none; padding: 8px 12px; cursor: pointer; font-size: 14px; color: #5c6c7b; border-radius: 6px; }
-        .tab.active { background: #e8f0fe; color: #1a73e8; font-weight: bold; }
+        .unidad-titulo { background: #1a73e8; color: white; padding: 10px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; text-align: center; }
 
-        .content { display: none; }
-        .content.active { display: block; }
+        /* Cuadrícula de vocabulario */
+        .word-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .word-btn { 
+            background: #ffffff; 
+            border: 1px solid #dcdfe4; 
+            padding: 15px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            text-align: center; 
+            font-size: 15px; 
+            font-weight: 500;
+            color: #2c3e50;
+            transition: all 0.2s; 
+        }
+        .word-btn:hover { border-color: #1a73e8; background: #f8fbff; transform: translateY(-1px); }
+        .word-btn:active { background: #e8f0fe; transform: translateY(0); }
 
-        /* Botones de palabras */
-        .word-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .word-btn { background: #ffffff; border: 1px solid #dcdfe4; padding: 12px; border-radius: 8px; cursor: pointer; text-align: left; font-size: 14px; transition: 0.2s; }
-        .word-btn:hover { border-color: #1a73e8; background: #f8f9fa; }
-        .word-btn:active { background: #e8f0fe; }
-
-        /* Recordatorio de puntos */
-        .points-alert { margin-top: 25px; padding: 12px; background: #fff9e6; border-left: 4px solid #ffcc00; border-radius: 4px; font-size: 13px; color: #856404; }
+        .footer-tip { margin-top: 25px; padding: 15px; background: #fff9e6; border-radius: 8px; font-size: 13px; color: #856404; text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="app-card">
     <div class="header">
+        <h1>🗣️ Practicador de Voz</h1>
         <div id="status" class="status-pill">MODO: NORMAL</div>
     </div>
 
-    <div class="tabs">
-        <button class="tab active" onclick="switchTab(event, 't1')">Tema 1</button>
-        <button class="tab" onclick="switchTab(event, 't2')">Tema 2</button>
-        <button class="tab" onclick="switchTab(event, 't3')">Reto</button>
+    <div class="unidad-titulo">UNIDAD 1</div>
+
+    <div class="word-grid">
+        <button class="word-btn" onclick="speak('Nombre')">Nombre</button>
+        <button class="word-btn" onclick="speak('Apellido')">Apellido</button>
+        <button class="word-btn" onclick="speak('Bien')">Bien</button>
+        <button class="word-btn" onclick="speak('Buenas tardes')">Buenas tardes</button>
+        <button class="word-btn" onclick="speak('Buenos días')">Buenos días</button>
+        <button class="word-btn" onclick="speak('Clase')">Clase</button>
+        <button class="word-btn" onclick="speak('Compañero')">Compañero</button>
+        <button class="word-btn" onclick="speak('Compañera')">Compañera</button>
+        <button class="word-btn" onclick="speak('Despacio')">Despacio</button>
+        <button class="word-btn" onclick="speak('Despedida')">Despedida</button>
+        <button class="word-btn" onclick="speak('Expresión')">Expresión</button>
+        <button class="word-btn" onclick="speak('Extranjero')">Extranjero</button>
+        <button class="word-btn" onclick="speak('Extranjera')">Extranjera</button>
+        <button class="word-btn" onclick="speak('Formal')">Formal</button>
+        <button class="word-btn" onclick="speak('Frase')">Frase</button>
+        <button class="word-btn" onclick="speak('Gracias')">Gracias</button>
+        <button class="word-btn" onclick="speak('Hasta pronto')">Hasta pronto</button>
     </div>
 
-    <!-- TEMA 1 -->
-    <div id="t1" class="content active">
-        <div class="word-grid">
-            <button class="word-btn" onclick="speak('Abecedario')">🔤 Abecedario</button>
-            <button class="word-btn" onclick="speak('Desarrollo')">💻 Desarrollo</button>
-            <button class="word-btn" onclick="speak('Éxito')">🚀 Éxito</button>
-            <button class="word-btn" onclick="speak('Comunidad')">👥 Comunidad</button>
-        </div>
-    </div>
-
-    <!-- TEMA 2 -->
-    <div id="t2" class="content">
-        <div class="word-grid">
-            <button class="word-btn" onclick="speak('Esfuerzo')">💪 Esfuerzo</button>
-            <button class="word-btn" onclick="speak('Práctica')">🎯 Práctica</button>
-        </div>
-    </div>
-
-    <!-- PESTAÑA RETO (Para fomentar la interacción en Skool) -->
-    <div id="t3" class="content">
-        <p style="font-size:14px; color:#444;">Escucha esta palabra secreta y escríbela en los comentarios de Skool para ganar puntos:</p>
-        <button class="word-btn" style="width:100%; text-align:center; border:2px dashed #1a73e8;" onclick="speak('Supercalifragilisticoespialidoso')">🔊 Oír palabra secreta</button>
-    </div>
-
-    <div class="points-alert">
-        ⭐ <strong>Tip de Skool:</strong> ¡Haz clic dos veces en una palabra para escucharla en modo tortuga! 🐢
+    <div class="footer-tip">
+        💡 <strong>Truco:</strong> Pulsa una palabra para oírla. <br>¡Pulsa de nuevo para escucharla <strong>más despacio</strong>! 🐢
     </div>
 </div>
 
 <script>
     let lastWord = "";
     
-    function switchTab(evt, tabName) {
-        let contents = document.getElementsByClassName("content");
-        for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
-        let tabs = document.getElementsByClassName("tab");
-        for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove("active");
-        document.getElementById(tabName).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
-
     function speak(text) {
         window.speechSynthesis.cancel();
+        
         setTimeout(() => {
             const msg = new SpeechSynthesisUtterance();
             msg.text = text;
@@ -93,13 +82,13 @@
             const status = document.getElementById('status');
 
             if (lastWord === text) {
-                msg.rate = 0.4;
+                msg.rate = 0.4; // Modo tortuga
                 status.innerText = "MODO: LENTO 🐢";
                 status.style.background = "#fff3e0";
                 status.style.color = "#ef6c00";
-                lastWord = "";
+                lastWord = ""; // Resetea para que la próxima sea normal
             } else {
-                msg.rate = 1.0;
+                msg.rate = 1.0; // Modo normal
                 status.innerText = "MODO: NORMAL";
                 status.style.background = "#f0f2f5";
                 status.style.color = "#5c6c7b";
