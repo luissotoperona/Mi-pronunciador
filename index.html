@@ -3,133 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro-Speaker Tabs</title>
+    <title>Pronunciador Pro - Skool Edition</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 20px; margin: 0; }
-        .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 500px; text-align: center; }
+        /* Estilo minimalista tipo Skool */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #ffffff; margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .app-card { width: 100%; max-width: 450px; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         
-        h1 { color: #2c3e50; margin-bottom: 5px; }
-        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 20px; background: #e8f4fd; color: #3498db; font-weight: bold; min-width: 120px; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .status-pill { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600; background: #f0f2f5; color: #5c6c7b; margin-bottom: 10px; }
 
-        /* Estilo de las Pestañas */
-        .tabs-header { display: flex; gap: 5px; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; overflow-x: auto; }
-        .tab-btn { background: #eee; border: none; padding: 10px 15px; cursor: pointer; border-radius: 8px; font-weight: bold; color: #666; transition: 0.3s; white-space: nowrap; }
-        .tab-btn.active { background: #3498db; color: white; }
+        /* Pestañas compactas */
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; overflow-x: auto; }
+        .tab { background: none; border: none; padding: 8px 12px; cursor: pointer; font-size: 14px; color: #5c6c7b; border-radius: 6px; }
+        .tab.active { background: #e8f0fe; color: #1a73e8; font-weight: bold; }
 
-        /* Contenido de los temas */
-        .tema-content { display: none; text-align: left; animation: fadeIn 0.3s; }
-        .tema-content.active { display: block; }
+        .content { display: none; }
+        .content.active { display: block; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Botones de palabras */
+        .word-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .word-btn { background: #ffffff; border: 1px solid #dcdfe4; padding: 12px; border-radius: 8px; cursor: pointer; text-align: left; font-size: 14px; transition: 0.2s; }
+        .word-btn:hover { border-color: #1a73e8; background: #f8f9fa; }
+        .word-btn:active { background: #e8f0fe; }
 
-        .grid-palabras { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; margin-top: 10px; }
-        
-        .btn-palabra {
-            background: #fff; border: 2px solid #3498db; color: #3498db;
-            padding: 10px; border-radius: 10px; cursor: pointer; font-weight: 600;
-            transition: all 0.2s; outline: none;
-        }
-        .btn-palabra:hover { background: #f0f9ff; }
-        .btn-palabra:active { transform: scale(0.95); background: #3498db; color: white; }
-
-        .download-btn { display: inline-block; margin-top: 15px; color: #e74c3c; text-decoration: none; font-size: 0.85rem; font-weight: bold; border: 1px solid #e74c3c; padding: 5px 10px; border-radius: 5px; }
+        /* Recordatorio de puntos */
+        .points-alert { margin-top: 25px; padding: 12px; background: #fff9e6; border-left: 4px solid #ffcc00; border-radius: 4px; font-size: 13px; color: #856404; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🗣️ Pro-Speaker</h1>
-    <div id="indicador" class="status-badge">Modo: Normal</div>
-
-    <!-- Cabecera de Pestañas -->
-    <div class="tabs-header">
-        <button class="tab-btn active" onclick="abrirTema(event, 'tema1')">Saludos</button>
-        <button class="tab-btn" onclick="abrirTema(event, 'tema2')">Comida</button>
-        <button class="tab-btn" onclick="abrirTema(event, 'tema3')">Viajes</button>
+<div class="app-card">
+    <div class="header">
+        <div id="status" class="status-pill">MODO: NORMAL</div>
     </div>
 
-    <!-- Contenido TEMA 1 -->
-    <div id="tema1" class="tema-content active">
-        <div class="grid-palabras">
-            <button class="btn-palabra" onclick="hablar('Hola')">Hola</button>
-            <button class="btn-palabra" onclick="hablar('Gracias')">Gracias</button>
-            <button class="btn-palabra" onclick="hablar('Por favor')">Por favor</button>
-            <button class="btn-palabra" onclick="hablar('Buenos días')">Buenos días</button>
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab(event, 't1')">Tema 1</button>
+        <button class="tab" onclick="switchTab(event, 't2')">Tema 2</button>
+        <button class="tab" onclick="switchTab(event, 't3')">Reto</button>
+    </div>
+
+    <!-- TEMA 1 -->
+    <div id="t1" class="content active">
+        <div class="word-grid">
+            <button class="word-btn" onclick="speak('Abecedario')">🔤 Abecedario</button>
+            <button class="word-btn" onclick="speak('Desarrollo')">💻 Desarrollo</button>
+            <button class="word-btn" onclick="speak('Éxito')">🚀 Éxito</button>
+            <button class="word-btn" onclick="speak('Comunidad')">👥 Comunidad</button>
         </div>
-        <a href="saludos.pdf" download class="download-btn">📥 Descargar PDF Saludos</a>
     </div>
 
-    <!-- Contenido TEMA 2 -->
-    <div id="tema2" class="tema-content">
-        <div class="grid-palabras">
-            <button class="btn-palabra" onclick="hablar('Manzana')">Manzana</button>
-            <button class="btn-palabra" onclick="hablar('Cena')">Cena</button>
-            <button class="btn-palabra" onclick="hablar('Restaurante')">Restaurante</button>
-            <button class="btn-palabra" onclick="hablar('Hambre')">Hambre</button>
+    <!-- TEMA 2 -->
+    <div id="t2" class="content">
+        <div class="word-grid">
+            <button class="word-btn" onclick="speak('Esfuerzo')">💪 Esfuerzo</button>
+            <button class="word-btn" onclick="speak('Práctica')">🎯 Práctica</button>
         </div>
-        <a href="comida.pdf" download class="download-btn">📥 Descargar PDF Comida</a>
     </div>
 
-    <!-- Contenido TEMA 3 -->
-    <div id="tema3" class="tema-content">
-        <div class="grid-palabras">
-            <button class="btn-palabra" onclick="hablar('Avión')">Avión</button>
-            <button class="btn-palabra" onclick="hablar('Maleta')">Maleta</button>
-            <button class="btn-palabra" onclick="hablar('Pasaporte')">Pasaporte</button>
-            <button class="btn-palabra" onclick="hablar('Estación')">Estación</button>
-        </div>
-        <a href="viajes.pdf" download class="download-btn">📥 Descargar PDF Viajes</a>
+    <!-- PESTAÑA RETO (Para fomentar la interacción en Skool) -->
+    <div id="t3" class="content">
+        <p style="font-size:14px; color:#444;">Escucha esta palabra secreta y escríbela en los comentarios de Skool para ganar puntos:</p>
+        <button class="word-btn" style="width:100%; text-align:center; border:2px dashed #1a73e8;" onclick="speak('Supercalifragilisticoespialidoso')">🔊 Oír palabra secreta</button>
     </div>
 
+    <div class="points-alert">
+        ⭐ <strong>Tip de Skool:</strong> ¡Haz clic dos veces en una palabra para escucharla en modo tortuga! 🐢
+    </div>
 </div>
 
 <script>
-    let ultimaPalabra = "";
-
-    // Función para cambiar entre pestañas
-    function abrirTema(evt, nombreTema) {
-        // Ocultar todos los contenidos
-        const contenidos = document.getElementsByClassName("tema-content");
-        for (let i = 0; i < contenidos.length; i++) {
-            contenidos[i].classList.remove("active");
-        }
-
-        // Quitar clase active de todos los botones
-        const botones = document.getElementsByClassName("tab-btn");
-        for (let i = 0; i < botones.length; i++) {
-            botones[i].classList.remove("active");
-        }
-
-        // Mostrar el tema actual y marcar el botón como activo
-        document.getElementById(nombreTema).classList.add("active");
+    let lastWord = "";
+    
+    function switchTab(evt, tabName) {
+        let contents = document.getElementsByClassName("content");
+        for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+        let tabs = document.getElementsByClassName("tab");
+        for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove("active");
+        document.getElementById(tabName).classList.add("active");
         evt.currentTarget.classList.add("active");
     }
 
-    // Función de voz con modo tortuga corregido
-    function hablar(texto) {
+    function speak(text) {
         window.speechSynthesis.cancel();
-
         setTimeout(() => {
-            const mensaje = new SpeechSynthesisUtterance();
-            mensaje.text = texto;
-            mensaje.lang = 'es-ES';
-            const indicador = document.getElementById('indicador');
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = text;
+            msg.lang = 'es-ES';
+            const status = document.getElementById('status');
 
-            if (ultimaPalabra.toLowerCase() === texto.toLowerCase()) {
-                mensaje.rate = 0.3; 
-                indicador.innerText = "Modo: Muy Lento 🐢";
-                indicador.style.background = "#fdf2e9";
-                indicador.style.color = "#e67e22";
-                ultimaPalabra = ""; 
+            if (lastWord === text) {
+                msg.rate = 0.4;
+                status.innerText = "MODO: LENTO 🐢";
+                status.style.background = "#fff3e0";
+                status.style.color = "#ef6c00";
+                lastWord = "";
             } else {
-                mensaje.rate = 1.0; 
-                indicador.innerText = "Modo: Normal";
-                indicador.style.background = "#e8f4fd";
-                indicador.style.color = "#3498db";
-                ultimaPalabra = texto;
+                msg.rate = 1.0;
+                status.innerText = "MODO: NORMAL";
+                status.style.background = "#f0f2f5";
+                status.style.color = "#5c6c7b";
+                lastWord = text;
             }
-
-            window.speechSynthesis.speak(mensaje);
+            window.speechSynthesis.speak(msg);
         }, 50);
     }
 </script>
