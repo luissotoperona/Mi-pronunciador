@@ -3,99 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro-Speaker - Unidad 1</title>
+    <title>Pro-Speaker Academy - Vocabulario</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #ffffff; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .app-card { width: 100%; max-width: 500px; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        
-        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #f0f2f5; padding-bottom: 15px; }
-        h1 { color: #1a73e8; font-size: 22px; margin: 0; }
-        .status-pill { display: inline-block; padding: 5px 15px; border-radius: 50px; font-size: 12px; font-weight: 600; background: #f0f2f5; color: #5c6c7b; margin-top: 10px; transition: 0.3s; }
-
-        .unidad-titulo { background: #1a73e8; color: white; padding: 10px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; text-align: center; }
-
-        /* Cuadrícula de vocabulario */
-        .word-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .word-btn { 
-            background: #ffffff; 
-            border: 1px solid #dcdfe4; 
-            padding: 15px; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            text-align: center; 
-            font-size: 15px; 
-            font-weight: 500;
-            color: #2c3e50;
-            transition: all 0.2s; 
+        /* ESTILOS GENERALES (Alegres y Limpios) */
+        :root {
+            --primary: #1a73e8; /* Azul principal */
+            --secondary: #34a853; /* Verde para Unidad 2 */
+            --bg: #f8fbff;
+            --text: #2c3e50;
         }
-        .word-btn:hover { border-color: #1a73e8; background: #f8fbff; transform: translateY(-1px); }
-        .word-btn:active { background: #e8f0fe; transform: translateY(0); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        
+        .container { width: 100%; max-width: 800px; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        
+        /* CABECERA */
+        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        h1 { color: var(--primary); margin: 0 0 10px 0; font-size: 28px; }
+        .status-badge { display: inline-block; padding: 6px 18px; border-radius: 50px; font-size: 14px; font-weight: bold; background: #e8f0fe; color: var(--primary); transition: 0.3s; }
 
-        .footer-tip { margin-top: 25px; padding: 15px; background: #fff9e6; border-radius: 8px; font-size: 13px; color: #856404; text-align: center; }
+        /* PESTAÑAS DE NAVEGACIÓN */
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        .tab-btn { padding: 12px 24px; border: none; background: #eee; color: #555; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        .tab-btn:hover { background: #e0e0e0; }
+        .tab-btn.active.u1 { background: var(--primary); color: white; }
+        .tab-btn.active.u2 { background: var(--secondary); color: white; }
+
+        /* CONTENIDO DE LAS UNIDADES */
+        .unit-content { display: none; animation: fadeIn 0.5s; }
+        .unit-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        h2 { text-align: center; color: #5f6368; margin-bottom: 20px; }
+
+        /* TABLAS DE VOCABULARIO */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        th, td { text-align: left; padding: 15px; border-bottom: 1px solid #eee; }
+        th { background-color: #f1f3f4; color: #5f6368; font-weight: 600; text-transform: uppercase; font-size: 13px; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #fafafa; }
+
+        /* BOTONES DE PLAY */
+        .btn-play { background: none; border: none; cursor: pointer; font-size: 20px; color: var(--primary); padding: 0; transition: transform 0.1s; }
+        .btn-play:hover { transform: scale(1.2); }
+        .u2 .btn-play { color: var(--secondary); }
+
+        /* NOTA FINAL */
+        .footer-note { margin-top: 30px; padding: 15px; background: #fff9e6; border-radius: 10px; text-align: center; font-size: 14px; color: #856404; border: 1px solid #ffeeba; }
     </style>
 </head>
 <body>
 
-<div class="app-card">
+<div class="container">
     <div class="header">
-        <h1>🗣️ Practicador de Voz</h1>
-        <div id="status" class="status-pill">MODO: NORMAL</div>
+        <h1>🗣️ Academia Pro-Speaker</h1>
+        <div id="indicador" class="status-badge">MODO: NORMAL</div>
     </div>
 
-    <div class="unidad-titulo">UNIDAD 1</div>
-
-    <div class="word-grid">
-        <button class="word-btn" onclick="speak('Nombre')">Nombre</button>
-        <button class="word-btn" onclick="speak('Apellido')">Apellido</button>
-        <button class="word-btn" onclick="speak('Bien')">Bien</button>
-        <button class="word-btn" onclick="speak('Buenas tardes')">Buenas tardes</button>
-        <button class="word-btn" onclick="speak('Buenos días')">Buenos días</button>
-        <button class="word-btn" onclick="speak('Clase')">Clase</button>
-        <button class="word-btn" onclick="speak('Compañero')">Compañero</button>
-        <button class="word-btn" onclick="speak('Compañera')">Compañera</button>
-        <button class="word-btn" onclick="speak('Despacio')">Despacio</button>
-        <button class="word-btn" onclick="speak('Despedida')">Despedida</button>
-        <button class="word-btn" onclick="speak('Expresión')">Expresión</button>
-        <button class="word-btn" onclick="speak('Extranjero')">Extranjero</button>
-        <button class="word-btn" onclick="speak('Extranjera')">Extranjera</button>
-        <button class="word-btn" onclick="speak('Formal')">Formal</button>
-        <button class="word-btn" onclick="speak('Frase')">Frase</button>
-        <button class="word-btn" onclick="speak('Gracias')">Gracias</button>
-        <button class="word-btn" onclick="speak('Hasta pronto')">Hasta pronto</button>
+    <div class="tabs">
+        <button class="tab-btn active u1" onclick="abrirUnidad(event, 'unidad1', 'u1')">Unidad 1</button>
+        <button class="tab-btn u2" onclick="abrirUnidad(event, 'unidad2', 'u2')">Unidad 2</button>
     </div>
 
-    <div class="footer-tip">
-        💡 <strong>Truco:</strong> Pulsa una palabra para oírla. <br>¡Pulsa de nuevo para escucharla <strong>más despacio</strong>! 🐢
+    <div id="unidad1" class="unit-content active u1">
+        <h2>Vocabulario Unidad 1 (Final) [cite: 1]</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Escuchar</th>
+                    <th>Español</th>
+                    <th>Inglés / Definición</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><button class="btn-play" onclick="hablar('Nombre')">▶️</button></td><td>Nombre [cite: 2]</td><td>Name [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Apellido')">▶️</button></td><td>Apellido [cite: 2]</td><td>Last name [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Bien')">▶️</button></td><td>Bien [cite: 2]</td><td>Well [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Buenas tardes')">▶️</button></td><td>Buenas tardes [cite: 2]</td><td>Good afternoon [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Buenos días')">▶️</button></td><td>Buenos días [cite: 2]</td><td>Good morning [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Clase')">▶️</button></td><td>Clase [cite: 2]</td><td>Class / Classroom [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Compañero')">▶️</button></td><td>Compañero / Compañera [cite: 2]</td><td>Classmate / Colleague [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Despacio')">▶️</button></td><td>Despacio [cite: 2]</td><td>Slowly [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Despedida')">▶️</button></td><td>Despedida [cite: 2]</td><td>Farewell [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Expresión')">▶️</button></td><td>Expresión [cite: 2]</td><td>Expression [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Extranjero')">▶️</button></td><td>Extranjero / Extranjera [cite: 2]</td><td>Foreigner / Foreign [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Formal')">▶️</button></td><td>Formal [cite: 2]</td><td>Formal [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Frase')">▶️</button></td><td>Frase [cite: 2]</td><td>Sentence [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Gracias')">▶️</button></td><td>Gracias [cite: 2]</td><td>Thank you [cite: 2]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Hasta pronto')">▶️</button></td><td>Hasta pronto [cite: 2]</td><td>See you soon [cite: 2]</td></tr>
+                
+                <tr><td><button class="btn-play" onclick="hablar('Deletrear')">▶️</button></td><td>Deletrear [cite: 5]</td><td>Pronunciar por separado cada letra. [cite: 5]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Hasta luego')">▶️</button></td><td>Hasta luego [cite: 5]</td><td>Expresión de despedida. [cite: 5]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Hasta mañana')">▶️</button></td><td>Hasta mañana [cite: 5]</td><td>Expresión de despedida hasta el día siguiente. [cite: 5]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Hola')">▶️</button></td><td>Hola [cite: 5]</td><td>Saludo familiar. [cite: 5]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Letra')">▶️</button></td><td>Letra [cite: 5]</td><td>Signo o figura de los sonidos. [cite: 5]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Llamarse')">▶️</button></td><td>Llamarse [cite: 5]</td><td>Tener un determinado nombre. [cite: 5]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Por favor')">▶️</button></td><td>Por favor [cite: 5]</td><td>Expresión de cortesía. [cite: 5]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Saludo')">▶️</button></td><td>Saludo [cite: 5]</td><td>Expresión o gesto para decir hola. [cite: 5]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Señalar')">▶️</button></td><td>Señalar [cite: 11]</td><td>Indicar algo o a alguien. [cite: 11]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Señor')">▶️</button></td><td>Señor/a [cite: 11]</td><td>Término de cortesía. [cite: 11]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Sonido')">▶️</button></td><td>Sonido [cite: 11]</td><td>Sensación en el órgano del oído. [cite: 11]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Trabajar')">▶️</button></td><td>Trabajar [cite: 11]</td><td>Realizar una actividad como profesión. [cite: 11]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Unir')">▶️</button></td><td>Unir [cite: 11]</td><td>Juntar dos o más cosas. [cite: 11]</td></tr>
+            </tbody>
+        </table>
     </div>
+
+    <div id="unidad2" class="unit-content u2">
+        <h2>Unidad 2 </h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Escuchar</th>
+                    <th>Español</th>
+                    <th>Definición / Uso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><button class="btn-play" onclick="hablar('A dónde')">▶️</button></td><td>¿A dónde...? [cite: 13]</td><td>Preguntar la dirección de movimiento. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Adiós')">▶️</button></td><td>Adiós [cite: 13]</td><td>Expresión para despedirse. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Alegría')">▶️</button></td><td>Alegría [cite: 13]</td><td>Sentimiento de felicidad. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Amarillo')">▶️</button></td><td>Amarillo/a [cite: 13]</td><td>De color semejante al del limón. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Amor')">▶️</button></td><td>Amor [cite: 13]</td><td>Sentimiento que une una persona a otra. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Azul')">▶️</button></td><td>Azul [cite: 13]</td><td>De color del cielo sin nubes. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Bilingüe')">▶️</button></td><td>Bilingüe [cite: 13]</td><td>Que habla dos lenguas. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Blanco')">▶️</button></td><td>Blanco/a [cite: 13]</td><td>De color de nieve o leche. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Cómo')">▶️</button></td><td>¿Cómo...? [cite: 13]</td><td>Preguntar el modo o la manera. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Cuál')">▶️</button></td><td>¿Cuál...? [cite: 13]</td><td>Preguntar por alguien/algo entre varios. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Cuánto')">▶️</button></td><td>¿Cuánto/a...? [cite: 13]</td><td>Preguntar la cantidad. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('De dónde')">▶️</button></td><td>¿De dónde...? [cite: 13]</td><td>Preguntar el lugar de proveniencia. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Dedicarse')">▶️</button></td><td>Dedicarse [cite: 13]</td><td>Indicar la ocupación o profesión. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Dependiente')">▶️</button></td><td>Dependiente/a [cite: 13]</td><td>Persona empleada para atención al público. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Dónde')">▶️</button></td><td>¿Dónde...? [cite: 13]</td><td>Preguntar el lugar donde está algo/alguien. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Entre')">▶️</button></td><td>Entre [cite: 13]</td><td>Situación entre dos o más cosas/acciones. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Español')">▶️</button></td><td>Español [cite: 13]</td><td>Castellano, lengua oficial de España. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Jardinero')">▶️</button></td><td>Jardinero/a [cite: 13]</td><td>Persona que cuida y cultiva un jardín. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Más')">▶️</button></td><td>Más [cite: 13]</td><td>Indica aumento, preferencia o superioridad. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Médico')">▶️</button></td><td>Médico/a [cite: 13]</td><td>Persona que ejerce la medicina. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Menos')">▶️</button></td><td>Menos [cite: 13]</td><td>Indica falta, disminución o inferioridad. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Peluquero')">▶️</button></td><td>Peluquero/a [cite: 13]</td><td>Persona que se dedica a peinar, cortar, etc. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Policía')">▶️</button></td><td>Policía [cite: 13]</td><td>Cuerpo encargado del orden público. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Profesión')">▶️</button></td><td>Profesión [cite: 13]</td><td>Actividad realizada a cambio de un salario. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Profesor')">▶️</button></td><td>Profesor/a [cite: 13]</td><td>Persona que se dedica a la enseñanza. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Qué')">▶️</button></td><td>¿Qué...? [cite: 13]</td><td>Se usa para preguntar algo. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Rojo')">▶️</button></td><td>Rojo/a [cite: 13]</td><td>Del color del tomate. [cite: 13]</td></tr>
+                <tr><td><button class="btn-play" onclick="hablar('Verde')">▶️</button></td><td>Verde [cite: 16]</td><td>De color semejante al de la hierba fresca. [cite: 16]</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        💡 <strong>Truco:</strong> Pulsa ▶️ para oír la palabra. <br>Si pulsas ▶️ otra vez seguidas, ¡sonará <strong>más despacio (Modo Tortuga 🐢)</strong>!
+    </div>
+
 </div>
 
 <script>
-    let lastWord = "";
+    let ultimaPalabra = "";
     
-    function speak(text) {
-        window.speechSynthesis.cancel();
-        
-        setTimeout(() => {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = text;
-            msg.lang = 'es-ES';
-            const status = document.getElementById('status');
+    // Función para cambiar entre pestañas
+    function abrirUnidad(evt, nombreUnidad, claseActiva) {
+        // Ocultar todo el contenido
+        const contenidos = document.getElementsByClassName("unit-content");
+        for (let i = 0; i < contenidos.length; i++) {
+            contenidos[i].classList.remove("active");
+        }
 
-            if (lastWord === text) {
-                msg.rate = 0.4; // Modo tortuga
-                status.innerText = "MODO: LENTO 🐢";
-                status.style.background = "#fff3e0";
-                status.style.color = "#ef6c00";
-                lastWord = ""; // Resetea para que la próxima sea normal
+        // Quitar clase 'active' de todos los botones
+        const botones = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < botones.length; i++) {
+            botones[i].classList.remove("active");
+            botones[i].classList.remove("u1");
+            botones[i].classList.remove("u2");
+        }
+        // Volver a añadir las clases u1/u2 base
+        botones[0].classList.add("u1");
+        botones[1].classList.add("u2");
+
+        // Mostrar la unidad actual y marcar el botón como activo
+        document.getElementById(nombreUnidad).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    // Función de voz (con Modo Tortuga)
+    function hablar(texto) {
+        // Cancelar cualquier audio previo
+        window.speechSynthesis.cancel();
+
+        setTimeout(() => {
+            const mensaje = new SpeechSynthesisUtterance();
+            mensaje.text = texto;
+            mensaje.lang = 'es-ES'; // Español
+            
+            const indicador = document.getElementById('indicador');
+
+            // Lógica del Modo Tortuga
+            if (ultimaPalabra === texto) {
+                mensaje.rate = 0.4; // Muy lento (40%)
+                indicador.innerText = "MODO: LENTO 🐢";
+                indicador.style.background = "#fff3e0";
+                indicador.style.color = "#ef6c00";
+                ultimaPalabra = ""; // Resetear para el próximo clic
             } else {
-                msg.rate = 1.0; // Modo normal
-                status.innerText = "MODO: NORMAL";
-                status.style.background = "#f0f2f5";
-                status.style.color = "#5c6c7b";
-                lastWord = text;
+                mensaje.rate = 1.0; // Velocidad normal
+                indicador.innerText = "MODO: NORMAL";
+                indicador.style.background = "#e8f0fe";
+                indicador.style.color = "#1a73e8";
+                ultimaPalabra = texto;
             }
-            window.speechSynthesis.speak(msg);
-        }, 50);
+
+            window.speechSynthesis.speak(mensaje);
+        }, 50); // Pequeña pausa para asegurar la cancelación
     }
 </script>
 
